@@ -3,12 +3,26 @@
     <head>
         <meta charset="utf-8">
         <title>Chaos</title>
+        <style>
+        </style>
     </head>
     <body>
         <h1>Chaos</h1>
         <img src="https://media.giphy.com/media/fRFlElExkthNC/giphy.gif" alt="Chaos Pendulum" style="height:100%; width:auto;">
-        {%for i in range(0, len)%} 
-        <h2 class="item_title"><a href="{{items[i]['url']}}" target="_blank">{{items[i]['title']}}</a> <span class="item_price">{{items[i]['price']}}</span></h2> 
-        {%endfor%}
+
+        <h2>Min Price: ${{mini}} | Max Price: ${{maxi}} | Ave Price: ${{ave}}</h2>
+
+        <table style="width:100%" border="1" rules="all">
+            <tr style="background-color: darkgrey; font-size: 20px;">
+                <th>Title</th>
+                <th>Price</th>
+            </tr>
+            {%for i in range(0, len)%} 
+            <tr>
+                <td class="item_title"><a style="text-decoration:none" href="{{items[i]['url']}}" target="_blank">{{items[i]['title']}}</a></td>
+                <td><span class="item_price">{{items[i]['price']}}</span></td>
+            </tr>
+            {%endfor%}
+        </table>
     </body>
 </html>

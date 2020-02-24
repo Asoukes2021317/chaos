@@ -4,8 +4,6 @@ from statistics import mean
 from decimal import Decimal
 TWOPLACES = Decimal(10) ** -2
 
-trademe = "https://www.trademe.co.nz/computers/tablets-ebook-readers/ebook-readers"
-
 def scrape(trademe):
     finished = False
     pageNum = 1
@@ -31,30 +29,37 @@ def process(theList):
             item_price = theItem.find("div", {"class":"listingBuyNowPrice"}).text.strip()
         except AttributeError:
             continue # go to next item, adverts won't be added
-
         item_url = "https://www.trademe.co.nz"+theItem['href']
-
         for item in processedList:
             if item["title"] == item_title and item["price"] == item_price:
-                # do nothing
-                break
+                break # do nothing
         else:
             processedList.append({"title":item_title, "price":item_price, "url":item_url})
-    
     return processedList
 
+def stripMoney(val):
+    price = Decimal(val.lstrip("$")).quantize(TWOPLACES)
+    return price
+
 def priceProcess(theList):
-    mini = theList[0]["price"]
-    maxi = theList[0]["price"]
+    mini = stripMoney(theList[0]["price"])
+    maxi = stripMoney(theList[0]["price"])
     ave = 0
     prices = []
     for item in theList:
-        price = Decimal(item["price"].lstrip("$")).quantize(TWOPLACES)
+        price = stripMoney(item["price"])
         if price < mini:
             mini = price
         if price > maxi:
             maxi = price
         prices.append(price)
     ave = mean(prices).quantize(TWOPLACES)
-    print(mini+maxi+ave)
-    
+    return mini, maxi, ave
+
+
+# For testing
+# trademe = "https://www.trademe.co.nz/computers/tablets-ebook-readers/ebook-readers"
+# theList = process(scrape(trademe))
+# print(theList)
+# mini, maxi, ave = priceProcess(theList)
+# print(mini, maxi, ave)

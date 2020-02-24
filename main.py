@@ -5,10 +5,11 @@ app = Flask(__name__)
 
 trademe = "https://www.trademe.co.nz/computers/tablets-ebook-readers/ebook-readers"
 theList = scraper.process(scraper.scrape(trademe))
-scraper.priceProcess(theList)
+mini, maxi, ave = scraper.priceProcess(theList)
+
 @app.route("/")
 def home():
-    return render_template("index.html", len=len(theList), items=theList)
+    return render_template("index.html", len=len(theList), items=theList, mini=mini, maxi=maxi, ave=ave)
     
 if __name__ == "__main__":
     app.run(debug=True)
