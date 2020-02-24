@@ -8,18 +8,21 @@ def scrape(trademe):
     finished = False
     pageNum = 1
     fullList = []
-    while not finished:
-        response = requests.get("%s?buy=buynow&page=%d" %(trademe,pageNum))
-        pageNum += 1
-        soup = BeautifulSoup(response.text, "html.parser")
-        totalCount = int(soup.find("span", {"id":"totalCount"}).text.strip())
-        lowCount = int(soup.find("span", {"id":"lowCount"}).text.strip())
-        if lowCount < totalCount:
-            itemlist = soup.findAll("a")
-            fullList += itemlist
-        else:
-            finished = True
-    return fullList
+    try:
+        while not finished:
+            response = requests.get("%s?buy=buynow&page=%d" %(trademe,pageNum))
+            pageNum += 1
+            soup = BeautifulSoup(response.text, "html.parser")
+            totalCount = int(soup.find("span", {"id":"totalCount"}).text.strip())
+            lowCount = int(soup.find("span", {"id":"lowCount"}).text.strip())
+            if lowCount < totalCount and pageNum < totalCount:
+                itemlist = soup.findAll("a")
+                fullList += itemlist
+            else:
+                finished = True
+        return fullList
+    except:
+        return None
 
 def process(theList):
     processedList = []
