@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Chaos</title>
+    </head>
+    <body>
+        <h1>Chaos</h1>
+        <img src="https://media.giphy.com/media/fRFlElExkthNC/giphy.gif" alt="Chaos Pendulum" style="height:100%; width:auto;">
+        {%for i in range(0, len)%} 
+        <h2 class="item_title"><a href="{{items[i]['url']}}" target="_blank">{{items[i]['title']}}</a> <span class="item_price">{{items[i]['price']}}</span></h2> 
+        {%endfor%}
+    </body>
+</html>
