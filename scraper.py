@@ -41,7 +41,13 @@ def process(theList):
     return processedList
 
 def stripMoney(val):
-    price = Decimal(val.lstrip("$")).quantize(TWOPLACES)
+    if '-' in val:
+        sep = '-'
+        val = val.split(sep, 1)[0]
+    val = val.lstrip('$')
+    val = val.replace(',', '')
+
+    price = Decimal(val).quantize(TWOPLACES)
     return price
 
 def priceProcess(theList):
