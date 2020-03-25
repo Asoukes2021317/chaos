@@ -12,6 +12,6 @@ mini, maxi, ave = scraper.priceProcess(theList)
 @app.route("/")
 def home():
     return render_template("index.html", len=len(theList), items=theList, mini=mini, maxi=maxi, ave=ave)
-    
+
 if __name__ == "__main__":
     app.run(debug=True)
