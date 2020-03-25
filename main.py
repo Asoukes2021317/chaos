@@ -2,8 +2,10 @@ from flask import Flask, render_template
 import scraper
 
 app = Flask(__name__)
+#trademe = "https://www.trademe.co.nz/computers/tablets-ebook-readers/ebook-readers"
+trademe = "https://www.trademe.co.nz/gaming/playstation-4/console"
 
-trademe = "https://www.trademe.co.nz/computers/tablets-ebook-readers/ebook-readers"
+
 theList = scraper.process(scraper.scrape(trademe))
 mini, maxi, ave = scraper.priceProcess(theList)
 
